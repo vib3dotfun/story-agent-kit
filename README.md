@@ -115,6 +115,7 @@ console.log(result.output);
 Currently, the following DApps are supported:
 
 - **Native**: Basic ETH operations (balance checking, transfers)
+- **ERC20**: ERC20 token operations (balance checking, transfers, approvals)
 
 Coming soon:
 - Uniswap
