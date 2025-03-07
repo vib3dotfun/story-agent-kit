@@ -31,12 +31,11 @@ async function testERC20App() {
         const tools = createERC20Tools(storyKit);
         console.log('Available ERC20 tools:', tools.map(tool => tool.name));
 
-        // Check USDT balance
+        // USDT Balance
         const usdtAddress = '0x674843c06ff83502ddb4d37c2e09c01cda38cbc8';
         const balance = await erc20Tools.getTokenBalance(storyKit, usdtAddress, storyKit.getWalletAddress());
         console.log('Wallet balance:', balance, 'USDT');
 
-        // Test balance tool
         const balanceTool = tools.find(tool => tool.name === 'erc20_balance');
         if (balanceTool) {
             const balanceResult = await balanceTool.call(JSON.stringify({ tokenAddress: usdtAddress, ownerAddress: storyKit.getWalletAddress() }));
@@ -45,8 +44,29 @@ async function testERC20App() {
             console.error('Balance tool not found');
         }
 
-        // Note: We're not testing the transfer tool here as it would actually send tokens
-        console.log('Native app test completed successfully!');
+        // USDT Allowance
+        const spenderAddress = '0x0000000000000000000000000000000000000000';
+        const allowance = await erc20Tools.getTokenAllowance(
+            storyKit,
+            usdtAddress,
+            storyKit.getWalletAddress(),
+            spenderAddress
+        );
+        console.log('Wallet allowance:', allowance, 'USDT');
+
+        const allowanceTool = tools.find(tool => tool.name === 'erc20_allowance');
+        if (allowanceTool) {
+            const allowanceResult = await allowanceTool.call(JSON.stringify(
+                {
+                    tokenAddress: usdtAddress,
+                    ownerAddress: storyKit.getWalletAddress(),
+                    spenderAddress: spenderAddress
+                }
+            ));
+            console.log('Allowance tool result:', allowanceResult);
+        } else {
+            console.error('Allowance tool not found');
+        }
     } catch (error) {
         console.error('Error in native app test:', error);
     }

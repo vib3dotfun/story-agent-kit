@@ -1,7 +1,7 @@
 import { Tool } from 'langchain/tools';
 import { StoryAgentKit } from '../../../agent';
 import { erc20Tools } from '../tools';
-import { findTokenAddress, getTokenName } from '../utils/token-finder';
+import { findTokenAddress, getTokenName, getSupportedTokens } from '../utils/token-finder';
 
 /**
  * LangChain tool for getting the balance of an ERC20 token
@@ -11,8 +11,11 @@ export class ERC20BalanceTool extends Tool {
     description = `Get the balance of an ERC20 token for a specific address.
     
     Inputs (input is a JSON string):
-    tokenAddress: string - The address of the ERC20 token
-    ownerAddress: string (optional) - The address to check the balance for (defaults to the wallet address)`;
+    tokenAddress: string (optional) - The address of the ERC20 token
+    token: string (optional) - The name or symbol of the token (e.g., "USDT", "USDC")
+    ownerAddress: string (optional) - The address to check the balance for (defaults to the wallet address)
+
+    Note: Either tokenAddress or token must be provided. Supported tokens: USDT (Tether), USDC (USD Coin).`;
 
     private agent: StoryAgentKit;
 
@@ -28,9 +31,14 @@ export class ERC20BalanceTool extends Tool {
 
             // Validate required fields
             if (!input.tokenAddress && !input.token) {
+                // List supported tokens in the error message
+                const supportedTokens = getSupportedTokens()
+                    .map(t => `${t.name} (${t.address})`)
+                    .join(', ');
+
                 return JSON.stringify({
                     status: 'error',
-                    message: 'Missing required field: either tokenAddress or token name/symbol must be provided'
+                    message: `Missing required field: either tokenAddress or token name/symbol must be provided. Supported tokens: ${supportedTokens}`
                 });
             }
 
@@ -39,9 +47,14 @@ export class ERC20BalanceTool extends Tool {
             if (!tokenAddress && input.token) {
                 tokenAddress = findTokenAddress(input.token);
                 if (!tokenAddress) {
+                    // List supported tokens in the error message
+                    const supportedTokens = getSupportedTokens()
+                        .map(t => `${t.name} (${t.address})`)
+                        .join(', ');
+
                     return JSON.stringify({
                         status: 'error',
-                        message: `Unknown token: ${input.token}. Please provide a valid token name, symbol, or address.`
+                        message: `Unknown token: "${input.token}". Supported tokens: ${supportedTokens}`
                     });
                 }
             }

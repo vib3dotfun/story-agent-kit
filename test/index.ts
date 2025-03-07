@@ -13,6 +13,7 @@ async function runTests() {
     if (args.length === 0) {
         console.log('Running all tests...\n');
         await testNativeApp();
+        await testERC20App();
         console.log('\nAll tests completed!');
         return;
     }
