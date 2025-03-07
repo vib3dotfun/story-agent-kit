@@ -3,10 +3,11 @@
 An open-source toolkit for connecting AI agents to Story Protocol. Inspired by [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit).
 
 ## Features
+
 - Tools for interacting with Story Protocol apps
 - LangChain integration for AI agents
 - Modular dapp-based architecture for easy extension
-- Simple chat CLI interface with AI agent
+- A simple CLI interface to chat with the AI agent
 
 ## Installation
 
