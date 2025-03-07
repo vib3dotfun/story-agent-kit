@@ -11,26 +11,25 @@ An open-source toolkit for connecting AI agents to Story Protocol. Inspired by [
 
 ## Installation
 
-```bash
-yarn add story-agent-kit
-```
-
-## Quick Start
-
 ```typescript
-import { StoryAgentKit, createAllTools } from 'story-agent-kit';
+import { MonadAgentKit, createAllTools } from 'monad-agent-kit';
+import { get_balance, transfer } from 'monad-agent-kit/apps/native/tools';
 
 // Initialize with private key
 const privateKey = '0x' + 'your-private-key';
-const agent = new StoryAgentKit(privateKey);
+const agent = new MonadAgentKit(privateKey);
 
-// Check balance
-const balance = await agent.getBalance();
-console.log('Wallet balance:', balance, 'ETH');
+// Check wallet address
+const address = agent.getWalletAddress();
+console.log('Wallet address:', address);
 
-// Transfer tokens
-const txHash = await agent.transfer('0x1234567890123456789012345678901234567890', '1.5');
-console.log('Transaction hash:', txHash);
+// Check balance using native tools
+const balanceResult = await get_balance(agent);
+console.log('Wallet balance:', balanceResult.balance, 'ETH');
+
+// Transfer tokens using native tools
+const transferResult = await transfer(agent, '0x1234567890123456789012345678901234567890', '1.5');
+console.log('Transaction hash:', transferResult.txHash);
 
 // Create LangChain tools
 const tools = createAllTools(agent);
