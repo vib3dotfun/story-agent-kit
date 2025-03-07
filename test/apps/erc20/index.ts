@@ -1,13 +1,13 @@
 import { StoryAgentKit } from '../../../src';
-import { createNativeTools } from '../../../src/apps/native/langchain';
-import { get_balance } from '../../../src/apps/native/tools';
+import { createERC20Tools } from '../../../src/apps/erc20/langchain';
 import 'dotenv/config';
+import { erc20Tools } from '../../../src/apps/erc20/tools';
 
 /**
  * Test for native app functionality
  */
-async function testNativeApp() {
-    console.log('=== Testing Native App ===');
+async function testERC20App() {
+    console.log('=== Testing ERC20 App ===');
 
     // Load private key from environment variables
     let privateKey = process.env.WALLET_PRIVATE_KEY;
@@ -27,18 +27,19 @@ async function testNativeApp() {
         const storyKit = new StoryAgentKit(privateKey);
         console.log('Wallet address:', storyKit.getWalletAddress());
 
-        // Check balance using the native tool
-        const balanceResult = await get_balance(storyKit);
-        console.log('Wallet balance:', balanceResult.balance, 'ETH');
+        // Create LangChain tools for ERC20 app
+        const tools = createERC20Tools(storyKit);
+        console.log('Available ERC20 tools:', tools.map(tool => tool.name));
 
-        // Create LangChain tools for native app
-        const tools = createNativeTools(storyKit);
-        console.log('Available native tools:', tools.map(tool => tool.name));
+        // Check USDT balance
+        const usdtAddress = '0x674843c06ff83502ddb4d37c2e09c01cda38cbc8';
+        const balance = await erc20Tools.getTokenBalance(storyKit, usdtAddress, storyKit.getWalletAddress());
+        console.log('Wallet balance:', balance, 'USDT');
 
         // Test balance tool
-        const balanceTool = tools.find(tool => tool.name === 'native_balance');
+        const balanceTool = tools.find(tool => tool.name === 'erc20_balance');
         if (balanceTool) {
-            const balanceResult = await balanceTool.call('{}');
+            const balanceResult = await balanceTool.call(JSON.stringify({ tokenAddress: usdtAddress, ownerAddress: storyKit.getWalletAddress() }));
             console.log('Balance tool result:', balanceResult);
         } else {
             console.error('Balance tool not found');
@@ -53,7 +54,7 @@ async function testNativeApp() {
 
 // Run the test if this file is executed directly
 if (require.main === module) {
-    testNativeApp();
+    testERC20App();
 }
 
-export { testNativeApp }; 
+export { testERC20App }; 

@@ -11,7 +11,7 @@ const balanceAction: Action = {
         'view balance',
         'show balance',
     ],
-    description: `Get the balance of a story wallet.
+    description: `Get the balance of a Story wallet.
   If you want to get the balance of your wallet, you don't need to provide the address.`,
     examples: [
         [
@@ -43,14 +43,8 @@ const balanceAction: Action = {
         address: z.string().optional(),
     }),
     handler: async (agent: StoryAgentKit, input: Record<string, any>) => {
-        const balance = await get_balance(agent, input.address);
-        const address = input.address || agent.getWalletAddress();
-
-        return {
-            status: 'success',
-            balance,
-            address,
-        };
+        // The get_balance tool now returns a BalanceResponse object
+        return await get_balance(agent, input.address);
     },
 };
 

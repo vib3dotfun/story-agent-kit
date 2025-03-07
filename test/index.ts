@@ -1,5 +1,6 @@
 import { testNativeApp } from './apps/native';
 import 'dotenv/config';
+import { testERC20App } from './apps/erc20';
 
 /**
  * Run all tests or specific app tests based on command line arguments
@@ -22,9 +23,12 @@ async function runTests() {
             case 'native':
                 await testNativeApp();
                 break;
+            case 'erc20':
+                await testERC20App();
+                break;
             default:
                 console.error(`Unknown app: ${app}`);
-                console.log('Available apps: native');
+                console.log('Available apps: native, erc20');
                 process.exit(1);
         }
     }
