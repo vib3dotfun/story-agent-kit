@@ -2,7 +2,7 @@ import { defineChain } from 'viem';
 
 // Define story chain
 export const story = defineChain({
-    id: 10143,
+    id: 1514,
     name: 'story',
     nativeCurrency: {
         decimals: 18,
