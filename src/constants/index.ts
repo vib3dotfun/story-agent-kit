@@ -6,8 +6,8 @@ export const story = defineChain({
     name: 'story',
     nativeCurrency: {
         decimals: 18,
-        name: 'story',
-        symbol: 'story',
+        name: 'IP',
+        symbol: 'IP',
     },
     rpcUrls: {
         default: {
@@ -20,7 +20,7 @@ export const story = defineChain({
     blockExplorers: {
         default: {
             name: 'story Explorer',
-            url: 'https://testnet.storyexplorer.com/',
+            url: 'https://explorer.story.foundation/',
         },
     },
 });
