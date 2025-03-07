@@ -9,8 +9,6 @@ test/
 ├── apps/                # Tests organized by app
 │   ├── native/          # Tests for native ETH operations
 │   │   └── index.ts     # Native app tests
-│   ├── nadfun/          # Tests for nadfun protocol
-│   │   └── index.ts     # Nadfun app tests
 │   └── ... (other apps)
 └── index.ts             # Main test runner
 ```
@@ -31,15 +29,6 @@ yarn test
 # Test native app only
 yarn test:native
 
-# Test nadfun app only
-yarn test:nadfun
-```
-
-Or using the main test runner with arguments:
-
-```bash
-# Test multiple specific apps
-yarn tsx test/index.ts native nadfun
 ```
 
 ## Adding Tests for New Apps
