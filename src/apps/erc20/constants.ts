@@ -8,6 +8,7 @@ export const ERC20_CONSTANTS = {
     // Common ERC20 token addresses
     TOKENS: {
         USDT: '0x674843c06ff83502ddb4d37c2e09c01cda38cbc8',
-        USDC: '0xf1815bd50389c46847f0bda824ec8da914045d14'
+        USDC: '0xf1815bd50389c46847f0bda824ec8da914045d14',
+        STIP: '0xd07Faed671decf3C5A6cc038dAD97c8EFDb507c0'
     }
 };

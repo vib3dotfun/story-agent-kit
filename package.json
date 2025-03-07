@@ -11,6 +11,7 @@
     "test": "tsx test/index.ts",
     "test:native": "tsx test/index.ts native",
     "test:erc20": "tsx test/index.ts erc20",
+    "test:metapool": "tsx test/index.ts metapool",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

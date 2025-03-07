@@ -15,7 +15,7 @@ export class ERC20BalanceTool extends Tool {
     token: string (optional) - The name or symbol of the token (e.g., "USDT", "USDC")
     ownerAddress: string (optional) - The address to check the balance for (defaults to the wallet address)
 
-    Note: Either tokenAddress or token must be provided. Supported tokens: USDT (Tether), USDC (USD Coin).`;
+    Note: Either tokenAddress or token must be provided. Supported tokens: USDT (Tether), USDC (USD Coin), STIP (Story Protocol IP).`;
 
     private agent: StoryAgentKit;
 

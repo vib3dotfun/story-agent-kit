@@ -1,6 +1,7 @@
 import { testNativeApp } from './apps/native';
 import 'dotenv/config';
 import { testERC20App } from './apps/erc20';
+import { testMetapoolApp } from './apps/metapool';
 
 /**
  * Run all tests or specific app tests based on command line arguments
@@ -14,6 +15,7 @@ async function runTests() {
         console.log('Running all tests...\n');
         await testNativeApp();
         await testERC20App();
+        await testMetapoolApp();
         console.log('\nAll tests completed!');
         return;
     }
@@ -27,9 +29,12 @@ async function runTests() {
             case 'erc20':
                 await testERC20App();
                 break;
+            case 'metapool':
+                await testMetapoolApp();
+                break;
             default:
                 console.error(`Unknown app: ${app}`);
-                console.log('Available apps: native, erc20');
+                console.log('Available apps: native, erc20, metapool');
                 process.exit(1);
         }
     }

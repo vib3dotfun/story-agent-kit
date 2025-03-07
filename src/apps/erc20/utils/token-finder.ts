@@ -83,6 +83,7 @@ export function isTokenSupported(nameOrSymbol: string): boolean {
 export function getSupportedTokens(): Array<{ name: string, address: string }> {
     return [
         { name: 'USDT (Tether)', address: ERC20_CONSTANTS.TOKENS.USDT },
-        { name: 'USDC (USD Coin)', address: ERC20_CONSTANTS.TOKENS.USDC }
+        { name: 'USDC (USD Coin)', address: ERC20_CONSTANTS.TOKENS.USDC },
+        { name: 'STIP (Story Protocol IP)', address: ERC20_CONSTANTS.TOKENS.STIP }
     ];
 } 
