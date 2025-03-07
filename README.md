@@ -116,6 +116,7 @@ Currently, the following DApps are supported:
 
 - **Native**: Basic ETH operations (balance checking, transfers)
 - **ERC20**: ERC20 token operations (balance checking, transfers, approvals)
+- **Metapool**: Staking and unstaking IP tokens
 
 Coming soon:
 - Uniswap
