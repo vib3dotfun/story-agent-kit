@@ -1,0 +1,160 @@
+# Story Agent Kit
+
+An open-source toolkit for connecting AI agents to Story and other EVM protocols. Inspired by [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit).
+
+## Features
+
+- Check wallet balances
+- Transfer native tokens (ETH)
+- LangChain integration for AI agents
+- Modular dapp-based architecture for easy extension
+- Interactive chat interface with AI agent
+
+## Installation
+
+```bash
+yarn add story-agent-kit
+```
+
+## Quick Start
+
+```typescript
+import { StoryAgentKit, createAllTools } from 'story-agent-kit';
+
+// Initialize with private key
+const privateKey = '0x' + 'your-private-key';
+const agent = new StoryAgentKit(privateKey);
+
+// Check balance
+const balance = await agent.getBalance();
+console.log('Wallet balance:', balance, 'ETH');
+
+// Transfer tokens
+const txHash = await agent.transfer('0x1234567890123456789012345678901234567890', '1.5');
+console.log('Transaction hash:', txHash);
+
+// Create LangChain tools
+const tools = createAllTools(agent);
+```
+
+## Chat Interface
+
+The Story Agent Kit includes an interactive chat interface that allows you to interact with an AI agent that has access to Story blockchain tools.
+
+To use the chat interface:
+
+1. Set up your environment variables in a `.env` file:
+   ```
+   WALLET_PRIVATE_KEY=your_private_key_here
+   RPC_URL=https://mainnet.storyrpc.io
+   OPENAI_API_KEY=your_openai_api_key_here
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here
+   ```
+
+2. Run the chat interface:
+   ```bash
+   yarn chat
+   ```
+
+3. Choose between chat mode and autonomous mode:
+   - **Chat mode**: Interact directly with the AI agent
+   - **Autonomous mode**: Let the agent run autonomously at regular intervals
+
+## LangChain Integration
+
+The Story Agent Kit provides ready-to-use LangChain tools for AI agents:
+
+```typescript
+import { StoryAgentKit, createAllTools } from 'story-agent-kit';
+import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from "@langchain/anthropic";
+import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+
+// Initialize the agent
+const agent = new StoryAgentKit(privateKey);
+const tools = createAllTools(agent);
+
+// Create the LLM
+const llm = new ChatOpenAI({ // or new ChatAnthropic({
+  temperature: 0,
+  modelName: 'gpt-4',
+});
+
+// Create the system prompt
+const systemPrompt = `You are a helpful assistant that can interact with the Story blockchain.
+You have access to tools that allow you to check balances and transfer ETH.
+Always be helpful, concise, and clear in your responses.`;
+
+// Create the prompt template
+const prompt = ChatPromptTemplate.fromMessages([
+  ["system", systemPrompt],
+  ["human", "{input}"],
+]);
+
+// Create the agent
+const openAIAgent = createOpenAIFunctionsAgent({
+  llm,
+  tools,
+  prompt,
+});
+
+const executor = AgentExecutor.fromAgentAndTools({
+  agent: openAIAgent,
+  tools,
+});
+
+// Run the agent
+const result = await executor.invoke({
+  input: 'What is my wallet balance?',
+});
+
+console.log(result.output);
+```
+
+## Supported DApps
+
+Currently, the following DApps are supported:
+
+- **Native**: Basic ETH operations (balance checking, transfers)
+
+Coming soon:
+- Uniswap
+- OpenSea
+- And more...
+
+## Architecture
+
+The project is organized by DApp, making it easy to add support for new protocols:
+
+```
+src/
+├── agent/           # Core wallet functionality
+├── apps/            # DApp implementations
+│   ├── native/      # Native ETH operations
+│   │   ├── tools/   # Low-level tools
+│   │   ├── actions/ # Action definitions
+│   │   └── langchain/ # LangChain tool wrappers
+│   └── ... (other dapps)
+├── actions/         # Combined actions from all dapps
+├── bin/             # CLI tools and chat interface
+└── utils/           # Shared utilities
+```
+
+To add a new DApp, create a new folder under `src/apps/` with the same structure.
+
+## Development
+
+1. Clone the repository
+2. Install dependencies: `yarn install`
+3. Create a `.env` file with your private key (see `.env.example`)
+4. Run the test: `yarn test`
+5. Try the chat interface: `yarn chat`
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT 
