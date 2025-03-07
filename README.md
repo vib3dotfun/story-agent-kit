@@ -1,14 +1,12 @@
 # Story Agent Kit
 
-An open-source toolkit for connecting AI agents to Story and other EVM protocols. Inspired by [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit).
+An open-source toolkit for connecting AI agents to Story Protocol. Inspired by [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit).
 
 ## Features
-
-- Check wallet balances
-- Transfer native tokens (ETH)
+- Tools for interacting with Story Protocol apps
 - LangChain integration for AI agents
 - Modular dapp-based architecture for easy extension
-- Interactive chat interface with AI agent
+- Simple chat CLI interface with AI agent
 
 ## Installation
 
